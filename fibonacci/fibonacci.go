@@ -71,7 +71,7 @@ func getString() string {
 
 	if err != nil {
 		fmt.Println("An error occured while reading input. Please try again", err)
- 		return "Error at line 25"
+ 		return "Failure"
 	}
 
 	return strings.TrimSuffix(input, "\r\n")
