@@ -21,7 +21,27 @@ func twoSum(nums []int, target int) []int {
     return []int{-99,-99}
  }
 
-// longest Common Prefix
+func isPalindrome(x int) bool {
+
+    var str = strconv.Itoa(x)
+    var start = 0;
+    var end = len(str) - 1;
+
+    for i:= 0; i < end; i++ {
+        if start > end{
+            return false;
+        }
+        if start == end{
+            return true;
+        }
+        if str[start] != str[end]{
+            return false;
+        }
+        start++;
+        end--;
+    }
+    return true;
+}
 
 func longestCommonPrefix(strs []string) string {
     
