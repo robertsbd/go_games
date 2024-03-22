@@ -79,58 +79,78 @@ type List struct {
     head *ListNode
 }
 
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+
+type List struct {
+    head *ListNode
+}
+
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
     
-    num1:= 0;
-    num2:= 0;
-    i := 0;
-    curNode := l1;
+    curNode1 := l1;
+    curNode2 := l2;
+    outList := List{};  
+    remainder := 0;
+    list1active := true;
+    list2active := true;
+    val1 := 0;
+    val2 := 0;
+    output := 0;
 
-    for {
-        num1 += curNode.Val*int(math.Pow10(i));
-        if curNode.Next == nil {
-            break;
-        } else {
-            curNode = curNode.Next; 
-            i++;
+    for list1active == true || list2active == true {
+        if list1active {
+            val1 = curNode1.Val;
+             if curNode1.Next == nil {list1active = false} else {curNode1 = curNode1.Next}
+        } else {val1 = 0;}
+
+        if list2active {
+            val2 = curNode2.Val;
+            if curNode2.Next == nil {list2active = false} else {curNode2 = curNode2.Next}
+        } else {val2 = 0}
+
+        output = remainder + val1 + val2;
+
+        if output >= 10 {
+            remainder = 1;
+            output = output - 10;
+        } else {remainder = 0;}
+
+        outNode := &ListNode{
+            Val: output,
         }
-    }
 
-    fmt.Println(num1)
-
-    curNode = l2;
-    i = 0;
-
-    for {
-        num2 += curNode.Val*int(math.Pow10(i));
-        if curNode.Next == nil {
-            break;
-        } else {
-            curNode = curNode.Next; 
-            i++;
-        }
-    }
-
-    fmt.Println(num2)
-
-    outNum := strconv.Itoa(num1 + num2);
-
-    outList := List{};
-
-    for i := len(outNum) - 1; i >= 0; i-- {
-       node := &ListNode{
-           Val: int(outNum[i] - '0'),
-       } 
-       if outList.head == nil {
-            outList.head = node; 
+        if outList.head == nil {
+            outList.head = outNode;
         } else {
             c := outList.head;
             for c.Next != nil {
                 c = c.Next;
             }
-            c.Next = node;
+            c.Next = outNode;
         }
-   }
+    }
+
+    if remainder == 1 {
+        outNode := &ListNode{
+            Val: 1,
+        }
+
+        if outList.head == nil {
+            outList.head = outNode; 
+        } else {
+            c := outList.head;
+            for c.Next != nil {
+                c = c.Next;
+            }
+            c.Next = outNode;
+        } 
+    }
 
     return outList.head; 
 }
